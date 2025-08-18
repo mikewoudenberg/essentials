@@ -65,6 +65,10 @@ Build the static site using
 npm run build
 ```
 
+### Updating the redirects
+
+Run ` ./generate_redirects.sh ./cards` from the root of this project to update the `_redirects` fils. This will enable netlify to redirect the "naked" URLs to the new nested structure
+
 ## Deploying to essentials.xebia.com
 
 TBD
