@@ -1,0 +1,22 @@
+---
+import type { CrumbItem } from '../types/card';
+
+interface Props {
+  items: CrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul>
+  {items.map((item, index) => (
+    <li class="inline text-gray">
+      {item.to ? (
+        <a href={item.to} class="underline">{item.label}</a>
+      ) : (
+        <span>{item.label}</span>
+      )}
+      {index < items.length - 1 && <span class="mx-2">&rsaquo;</span>}
+    </li>
+  ))}
+</ul>

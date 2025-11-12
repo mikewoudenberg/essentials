@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import CardLayout from '../layouts/CardLayout.astro';
+import Header from '../components/Header.astro';
+import Crumbpath from '../components/Crumbpath.astro';
+import { parseCardContent } from '../utils/cardParser';
+import { getCategoryColor } from '../config/categories';
+
+export async function getStaticPaths() {
+  const allCards = await getCollection('cards');
+
+  return allCards
+    .filter(card => card.id !== 'index.md')
+    .map(card => ({
+      params: { slug: card.id.replace(/\.md$/, '') },
+      props: { card },
+    }));
+}
+
+const { card } = Astro.props;
+
+// Error boundary: redirect if card is missing
+if (!card) {
+  return Astro.redirect('/404');
+}
+
+const parsed = parseCardContent(card.body);
+const contentHtml = await parsed.contentHtmlPromise;
+const color = getCategoryColor(card.data.category);
+
+// Build breadcrumb items
+const categoryLabel = card.data.category.charAt(0).toUpperCase() + card.data.category.slice(1);
+const crumbItems = [
+  { label: 'Home', to: '/' },
+  { label: categoryLabel, to: `/categories/${card.data.category}` },
+  { label: parsed.title },
+];
+
+const showBanner = !card.data.noBanner;
+const hasHeaderImage = !!card.data.headerImage;
+---
+
+<CardLayout title={`${parsed.title} - Xebia Essentials`} description={parsed.summary} showBanner={showBanner}>
+  {hasHeaderImage ? (
+    <>
+      <Header title={parsed.title} color="purple" centered>
+        <div class="grid grid-cols-4">
+          <div class="bg-red h-3"></div>
+          <div class="bg-orange h-3"></div>
+          <div class="bg-blue h-3"></div>
+          <div class="bg-green h-3"></div>
+        </div>
+      </Header>
+      <p class="my-4">
+        <a class="button small mr-2" href="/cards">Card index</a>
+        <a class="button small" href="/categories">Categories</a>
+      </p>
+    </>
+  ) : (
+    <>
+      <Crumbpath slot="crumbpath" items={crumbItems} />
+      <Header title={parsed.title} color={color} />
+    </>
+  )}
+
+  <article class="prose p-6" set:html={contentHtml} />
+</CardLayout>

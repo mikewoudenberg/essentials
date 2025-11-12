@@ -1,6 +1,17 @@
-const plugin = require('tailwindcss/plugin');
+import plugin from 'tailwindcss/plugin';
 
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx,vue}'],
+  safelist: [
+    'bg-blue',
+    'bg-green',
+    'bg-indigo',
+    'bg-orange',
+    'bg-red',
+    'bg-purple',
+    'bg-yellow',
+  ],
   theme: {
     colors: {
       blue: '#107FD5',

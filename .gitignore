@@ -6,3 +6,6 @@ node_modules
 dist
 .env
 .env.*
+
+# Astro
+.astro

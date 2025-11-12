@@ -12,7 +12,9 @@
 
 # Xebia Essentials static site generator
 
-This repository contains the static site generator for the [Xebia Essentials](https://essentials.xebia.com), along with all the cards' content and metadata. Each page contains [YAML](https://www.yaml.org/) [front matter](https://gridsome.org/docs/data-store-api/#preprocessing-markdown-frontmatter), two optional [markdown](https://daringfireball.net/projects/markdown) sections for the front and backsites of the [printed cards](https://xebia.com/books/xebia-essentials?utm_source=readme&utm_medium=web&utm_campaign=essentials) followed by a final markdown section that will be converted into the corresponding web page.
+This repository contains the static site generator for the [Xebia Essentials](https://essentials.xebia.com), along with all the cards' content and metadata. Built with [Astro](https://astro.build) for maximum performance - 100% static with zero client-side JavaScript.
+
+Each page contains [YAML](https://www.yaml.org/) front matter, two optional [markdown](https://daringfireball.net/projects/markdown) sections for the front and backsites of the [printed cards](https://xebia.com/books/xebia-essentials?utm_source=readme&utm_medium=web&utm_campaign=essentials) followed by a final markdown section that will be converted into the corresponding web page.
 
 This results in the following layout:
 
@@ -25,7 +27,15 @@ This results in the following layout:
     ---
     webpage
 
-Configuration is done through Gridsome's `gridsome.config.js` and `gridsome.server.js`.
+## Commands
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run preview  # Preview production build
+```
+
+Configuration is in `astro.config.mjs` and content collections are defined in `src/content/config.ts`.
 
 **Pull requests are more than welcome, see the [open issues](https://github.com/xebia/essentials/issues?state=open)!**
 

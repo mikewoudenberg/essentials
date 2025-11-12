@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import CardLayout from '../layouts/CardLayout.astro';
+import Header from '../components/Header.astro';
+import Crumbpath from '../components/Crumbpath.astro';
+
+const allCards = await getCollection('cards');
+
+// Get unique categories (excluding 'other')
+const categories = [...new Set(allCards.map(card => card.data.category))]
+  .filter(cat => cat !== 'other')
+  .sort();
+---
+
+<CardLayout title="Categories - Xebia Essentials" description="List of all card categories">
+  <Crumbpath
+    slot="crumbpath"
+    items={[{ label: 'Home', to: '/' }, { label: 'Categories' }]}
+  />
+  <Header title="Categories" color="indigo" />
+  <div class="prose p-6">
+    <ul>
+      {categories.map(category => (
+        <li>
+          <a href={`/categories/${category}`}>
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</CardLayout>

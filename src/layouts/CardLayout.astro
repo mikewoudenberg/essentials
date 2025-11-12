@@ -1,0 +1,36 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Banner from '../components/Banner.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  showBanner?: boolean;
+}
+
+const { title, description, showBanner = true } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="container layout">
+    <div class="my-4 min-h-[1.5rem]">
+      <slot name="crumbpath" />
+    </div>
+    <div class="page">
+      <slot />
+      {showBanner && <Banner />}
+      <Footer />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.layout {
+  max-width: 65ch;
+}
+.page {
+  @apply bg-white p-4 my-4;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+</style>

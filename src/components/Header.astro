@@ -1,0 +1,25 @@
+---
+interface Props {
+  color?: string;
+  centered?: boolean;
+  title: string;
+}
+
+const { color = 'indigo', centered = false, title } = Astro.props;
+---
+
+<header>
+  <div class:list={['p-8', 'h-64', `bg-${color}`, { centered }]}>
+    <h1>{title}</h1>
+  </div>
+  <slot />
+</header>
+
+<style>
+  h1 {
+    @apply text-white text-5xl font-bold;
+  }
+  .centered {
+    @apply flex justify-center items-center;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import { getEntry } from 'astro:content';
+import CardLayout from '../layouts/CardLayout.astro';
+import Header from '../components/Header.astro';
+import { remark } from 'remark';
+import remarkHtml from 'remark-html';
+
+const indexCard = await getEntry('cards', 'index');
+let indexContent = '';
+if (indexCard?.body) {
+  const processed = await remark()
+    .use(remarkHtml, { sanitize: false })
+    .process(indexCard.body);
+  indexContent = processed.toString();
+}
+---
+
+<CardLayout title="Xebia Essentials" showBanner={false}>
+  <Header title="Xebia Essentials" color="purple" centered>
+    <div class="grid grid-cols-4">
+      <div class="bg-red h-3"></div>
+      <div class="bg-orange h-3"></div>
+      <div class="bg-blue h-3"></div>
+      <div class="bg-green h-3"></div>
+    </div>
+  </Header>
+  <p class="my-4">
+    <a class="button small mr-2" href="/cards">Card index</a>
+    <a class="button small" href="/categories">Categories</a>
+  </p>
+
+  {indexContent && (
+    <article class="prose p-6" set:html={indexContent} />
+  )}
+</CardLayout>
